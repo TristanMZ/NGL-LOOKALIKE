@@ -13,14 +13,11 @@
         
         <form id="questionForm">
             <div class="form-group">
-                <label for="name">Nama Lengkap</label>
+                <label for="name">Pesan</label>
                 <input type="text" id="name" name="entry.1941942484" required placeholder="Masukkan nama kamu...">
             </div>
             
-            <div class="form-group">
-                <label for="question">Pertanyaan Anda</label>
-                <textarea name="entry.1701301878" id="question" rows="5" required placeholder="Tulis pertanyaan kamu..."></textarea>
-            </div>
+          
             
             <button type="submit" class="submit-btn">Kirim Pertanyaan</button>
         </form>
@@ -67,8 +64,8 @@
             }
 
             const formData = new FormData();
-            formData.append("entry.1941942484", name);
-            formData.append("entry.1701301878", question);
+            formData.append("entry.796952964", name);
+
 
             fetch("https://docs.google.com/forms/d/e/1FAIpQLSfktvPofnjMkWrq0q7SarrOjmCkOdG5E8gbWSKa_sdiqWYKsw/formResponse", {
                 method: "POST",
