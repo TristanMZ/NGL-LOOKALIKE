@@ -5,18 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kirim Pesan Anonim</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js"></script>
+    
 </head>
 <body>
-    <div class="container">
-        <h1>Kirim Pesan Anonim</h1>
-        <form id="messageForm">
-            <label for="message">Pesan Anda:</label>
-            <textarea id="message" name="message" required></textarea>
-            <input type="submit" value="Kirim">
+    <h1>Ajukan Pertanyaan Kepada Kami!</h1>
+        
+        
+        <form id="questionForm">
+            <div class="form-group">
+                <label for="name">Nama Lengkap</label>
+                <input type="text" id="name" name="entry.1941942484" required placeholder="Masukkan nama kamu...">
+            </div>
+            
+            <div class="form-group">
+                <label for="question">Pertanyaan Anda</label>
+                <textarea name="entry.1701301878" id="question" rows="5" required placeholder="Tulis pertanyaan kamu..."></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">Kirim Pertanyaan</button>
         </form>
-        <p id="response"></p>
+
+        
     </div>
-    <script src="scripts.js"></script>
+
+    <script>
+        document.getElementById('questionForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah reload halaman
+
+            const name = document.getElementById('name').value;
+            const question = document.getElementById('question').value;
+
+            if (!name || !question) {
+                alert('Harap isi semua kolom!');
+                return;
+            }
+            if (name && question) {
+                // Tampilkan pesan sukses
+                const alertBox = document.createElement('div');
+                alertBox.style.position = 'fixed';
+                alertBox.style.top = '20px';
+                alertBox.style.left = '50%';
+                alertBox.style.transform = 'translateX(-50%)';
+                alertBox.style.background = '#8B5CF6';
+                alertBox.style.color = 'white';
+                alertBox.style.padding = '16px 24px';
+                alertBox.style.borderRadius = '8px';
+                alertBox.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                alertBox.style.zIndex = '1000';
+                alertBox.innerHTML = `Pertanyaan dah dicatat📝!`;
+                
+                document.body.appendChild(alertBox);
+                
+                setTimeout(() => {
+                    alertBox.remove();
+                }, 3000);
+
+                // Reset form setelah 1 detik
+                setTimeout(() => {
+                    this.reset();
+                }, 1000);
+            }
+
+            const formData = new FormData();
+            formData.append("entry.1941942484", name);
+            formData.append("entry.1701301878", question);
+
+            fetch("https://docs.google.com/forms/d/e/1FAIpQLSe1RuRbSYe4d1eLTgi9uhtMhw6p58LB0-_Y65wJvOYQhAAvyw/formResponse", {
+                method: "POST",
+                mode: "no-cors",
+                body: formData
+            }).then(() => {
+                document.getElementById("successMessage").style.display = "block";
+                document.getElementById("questionForm").reset();
+
+                setTimeout(() => {
+                    document.getElementById("successMessage").style.display = "none";
+                }, 3000);
+            }).catch(error => {
+
+            });
+        });
+    </script>
+
 </body>
 </html>
